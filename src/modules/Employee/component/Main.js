@@ -37,6 +37,7 @@ const Main = (props) => {
       const url='http://localhost:8080/java/Employee/Timesheet/approved';
  axios.post(url,dataAprroved).then((result)=>{
   setData(result.data);
+  setCount({approved:result.data.length})
        console.log(result.data);
 }).catch((error)=>{
      console.log(error)
@@ -51,6 +52,7 @@ axios.post(url,dataRejected).then((result)=>{
   console.log(dataRejected)
        console.log(result.data);
        setData(result.data);
+       setCount({rejected:result.data.length})
 }).catch((error)=>{
     
 });
@@ -98,11 +100,15 @@ axios.post(url,dataRejected).then((result)=>{
             <Grid item xs={2} sm={2} md={3}>
               <Item>
                 <h2>{item.timesheetId}</h2>
+                <p>Mnager name:{item.project.employee.employee_name}</p>
+                <p>EmployeeName:{item.employee.employee_name}</p>
+                <p>Allocation: {item.hours}</p>
                 <p>Star date :{item.startDate}</p>
                 <p>End date:{item.endDate}</p>
-                <p>Allocation: {item.projectemployeemapping.allocation}</p>
+              
                 <p>Project name:{item.project.projectName}</p>
-                <p>Mnager name:{item.project.employee.employee_name}</p>
+               
+                
                 <p>Remarks:</p>
                 <p>Status:{item.approval}</p>
               </Item>
