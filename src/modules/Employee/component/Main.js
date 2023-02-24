@@ -4,9 +4,9 @@ import { experimentalStyled as styled } from "@mui/material/styles";
 import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
 import Paper from "@mui/material/Paper";
-import timesheetData from "../../../assets/data/showtimesheettoemployee.json";
-import approvedData from "../../../assets/data/showtimesheettoemployeebasedonaprroval.json";
+
 import logo from "../../../assets/Capture.png";
+import axios from 'axios';
 import {useNavigate} from "react-router-dom";
 import {useLocation} from "react-router-dom";
 const Item = styled(Paper)(({ theme }) => ({
@@ -19,20 +19,43 @@ const Item = styled(Paper)(({ theme }) => ({
 
 const Main = (props) => {
   const [count, setCount] = useState({ approved: 0, rejected: 0, pending: 0 });
-  const [data, setData] = useState(timesheetData);
-  const navigate=useNavigate();
-  const location=useLocation();
- console.log('location',location)
-  useEffect(() => {
-    setCount({ ...count, approved: approvedData.length });
-  }, []);
+  const[data,setData]=useState([])
 
-  const handleClick = (e) => {
+  const dataAprroved={
+    employeeId:props.data,
+    approval:0
+  }
+
+  const dataRejected={
+    employeeId:props.data,
+    approval:1
+  }
+ 
+  const handleClickApproved = (e) => {
     if (e.target.id == "approved") {
-      setData(approvedData);
+      console.log({dataAprroved})     
+      const url='http://localhost:8080/java/Employee/Timesheet/approved';
+ axios.post(url,dataAprroved).then((result)=>{
+  setData(result.data);
+       console.log(result.data);
+}).catch((error)=>{
+     console.log(error)
+});
     }
   };
-
+  const handleClickRejected = (e) => {
+    if (e.target.id == "rejected") {
+     
+      const url='http://localhost:8080/java/Employee/Timesheet/approved';
+axios.post(url,dataRejected).then((result)=>{
+  console.log(dataRejected)
+       console.log(result.data);
+       setData(result.data);
+}).catch((error)=>{
+    
+});
+    }
+  };
   return (
     <div
       style={{
@@ -43,18 +66,20 @@ const Main = (props) => {
         backgroundPositionY: "60px",
       }}
     >
-<div></div>
+
       <Grid
         container
         spacing={{ xs: 2, md: 3 }}
         columns={{ xs: 4, sm: 8, md: 12 }}
         style={{ marginTop: "20px" }}
       >
+   
         <Grid item xs={10}>
-          <div className="status" onClick={handleClick} id="approved">
+          <div className="status" onClick={handleClickApproved} id="approved">
             Approved {count.approved}
           </div>
-          <div className="status">Rejected {count.rejected}</div>
+         
+          <div className="status" onClick={handleClickRejected} id="rejected">Rejected {count.rejected}</div>
           <div className="status">Pending {count.pending}</div>
         </Grid>
         <Grid item xs={2}>
@@ -68,15 +93,18 @@ const Main = (props) => {
           spacing={{ xs: 3, md: 3 }}
           columns={{ xs: 4, sm: 8, md: 12 }}
         >
+        
           {data.map((item) => (
             <Grid item xs={2} sm={2} md={3}>
               <Item>
                 <h2>{item.timesheetId}</h2>
-                <p>Project Name: {item.project.projectName}</p>
-                <p>Project Id:{item.project.project_id}</p>
-                <p>Manager Name: {item.project.employee.employee_name}</p>
+                <p>Star date :{item.startDate}</p>
+                <p>End date:{item.endDate}</p>
+                <p>Allocation: {item.projectemployeemapping.allocation}</p>
+                <p>Project name:{item.project.projectName}</p>
+                <p>Mnager name:{item.project.employee.employee_name}</p>
                 <p>Remarks:</p>
-                <p>Status:</p>
+                <p>Status:{item.approval}</p>
               </Item>
             </Grid>
           ))}

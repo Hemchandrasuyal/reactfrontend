@@ -15,11 +15,12 @@ import  MenuIcon  from "@mui/icons-material/Menu";
 
 import logo from "../../assets/logo.png";
 
-const pages = ["Manoj Kumar", "Logout"];
 
-function Navbar() {
+
+function Navbar(props) {
   const [anchorElNav, setAnchorElNav] = React.useState(null);
-
+  var c=props.data;
+  const pages = [c, "Logout"];
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
   };
