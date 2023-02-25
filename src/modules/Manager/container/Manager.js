@@ -4,24 +4,35 @@ import Navbar from "../../Navbar/Navbar";
 import Panel from "../component/Panel";
 import Grid from "@mui/material/Grid";
 import Timesheet from "../component/Timesheet";
-import data from "../../../assets/data/showtimesheettomanager.json";
+
 import projectOne from "../../../assets/data/showtimesheettomanagerprojectwise.json";
 import ReporteeList from "../component/ReporteeList";
 import {useNavigate} from "react-router-dom";
 import {useLocation} from "react-router-dom";
-
+import axios from 'axios';
 const Manager = () => {
   const [display, setDisplay] = useState("timesheet");
-  const [timsheetDisplay, setTimesheetDisplay] = useState(data);
+  const [timsheetDisplay, setTimesheetDisplay] = useState([]);
   const location=useLocation();
   const [dataManager, setdataManager] = useState(location);
   const changeDisplay = (props) => {
     setDisplay(props);
   };
-
+const dataOfManager={employeeId:dataManager.state.EmployeeId };
   useEffect(() => {
     if (display == "timesheet") {
-      setTimesheetDisplay(data);
+      const url='http://localhost:8080/java/Manager/Timesheet';
+         console.log(dataManager.state.EmployeeId);
+    axios.post(url,dataOfManager).then((result)=>{
+     
+        console.log(result.data);
+        setTimesheetDisplay(result.data);
+     
+            console.log(result.data);
+     }).catch((error)=>{
+          console.log(error)
+     });
+     
     } else if (display == "project1") {
       setTimesheetDisplay(projectOne);
     } else if (display == "project2") {
@@ -46,7 +57,7 @@ const Manager = () => {
           {display == "reportee-list" ? (
             <ReporteeList />
           ) : (
-            <Timesheet data={timsheetDisplay} display={display} />
+            <Timesheet data={timsheetDisplay} display={display}  />
           )}
         </Grid>
       </Grid>

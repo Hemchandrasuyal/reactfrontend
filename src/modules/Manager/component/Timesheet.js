@@ -60,7 +60,7 @@ const Timesheet = ({ data, display }) => {
                 <p>Project Name: {item.project.projectName}</p>
                 <p>Project Id:{item.project.project_id}</p>
                 <p>Remarks:</p>
-                <p>Status:</p>
+                <p>Status:{item.approval}</p>
               </Item>
             </Grid>
           ))}

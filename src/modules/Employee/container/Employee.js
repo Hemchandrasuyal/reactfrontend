@@ -13,8 +13,7 @@ function Employee() {
   return (
     <>
       <Navbar data={data1.state.EmployeeName}/>
-      <Main data={data1.state.EmployeeId
-}/>
+      <Main data={data1.state.EmployeeId}/>
       <Footer />
     </>
   );
