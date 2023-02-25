@@ -2,9 +2,13 @@ import React, { useEffect, useState } from "react";
 import "./Panel.css";
 import MenuItem from "@mui/material/MenuItem";
 import { Select, InputLabel } from "@mui/material";
-
-const Panel = ({ changeDisplay }) => {
+import axios from "axios";
+const Panel = ({ changeDisplay,data}) => {
   const [selected, setSelected] = useState("Reportees Timesheet");
+  const [projectData,setprojectData]=useState()
+ 
+
+
 
   const selectionChangeHandler = (event) => {
     console.log(selected);
@@ -14,7 +18,18 @@ const Panel = ({ changeDisplay }) => {
   const handleClick = (e) => {
     changeDisplay(e.target.id);
   };
-
+  const dataOfManager={employeeId:data };
+  
+  useEffect(() => {
+    const url='http://localhost:8080/java/Manager/Project';
+    axios.post(url,dataOfManager).then((result)=>{
+         setprojectData(result.data)
+          console.log(result.data);
+   }).catch((error)=>{
+        console.log(error)
+   });
+  },[]);
+     
   return (
     <div className="panel-container">
       <p className="left-panel" onClick={handleClick} id="timesheet">
@@ -22,7 +37,8 @@ const Panel = ({ changeDisplay }) => {
       </p>
 
       <p>
-        <Select
+  
+    <Select
           style={{ marginTop: 60 }}
           className="panel"
           value={selected}
@@ -37,7 +53,7 @@ const Panel = ({ changeDisplay }) => {
           >
             Reportees Timesheet
           </MenuItem>
-
+         
           <MenuItem
             value="project1"
             style={{ color: "#043465", backgroundColor: "#ef4815" }}

@@ -22,7 +22,7 @@ const dataOfManager={employeeId:dataManager.state.EmployeeId };
   useEffect(() => {
     if (display == "timesheet") {
       const url='http://localhost:8080/java/Manager/Timesheet';
-         console.log(dataManager.state.EmployeeId);
+        
     axios.post(url,dataOfManager).then((result)=>{
      
         console.log(result.data);
@@ -50,7 +50,7 @@ const dataOfManager={employeeId:dataManager.state.EmployeeId };
         columns={{ xs: 4, sm: 8, md: 12 }}
       >
         <Grid item xs={4} md={4} sm={12}>
-          <Panel changeDisplay={changeDisplay} />
+          <Panel changeDisplay={changeDisplay} data={dataManager.state.EmployeeId}/>
         </Grid>
 
         <Grid item xs={8} md={8}>
