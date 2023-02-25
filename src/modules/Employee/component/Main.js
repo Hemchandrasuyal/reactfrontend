@@ -7,8 +7,7 @@ import Paper from "@mui/material/Paper";
 
 import logo from "../../../assets/Capture.png";
 import axios from 'axios';
-import {useNavigate} from "react-router-dom";
-import {useLocation} from "react-router-dom";
+
 const Item = styled(Paper)(({ theme }) => ({
   backgroundColor: "#043465",
   ...theme.typography.body2,

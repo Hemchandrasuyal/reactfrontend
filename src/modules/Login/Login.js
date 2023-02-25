@@ -30,7 +30,7 @@ const url='http://localhost:8080/java/login';
 axios.post(url,LoginDetails).then((result)=>{
   console.log(result.data.role);
   if(result.data.role==="manager"){
-    navigate("/manager");
+    navigate("/manager",{ state:{EmployeeId:result.data.employee_id,EmployeeName:result.data.employee_name},});
   }
   else{
     navigate("/employee",{ state:{EmployeeId:result.data.employee_id,EmployeeName:result.data.employee_name},});

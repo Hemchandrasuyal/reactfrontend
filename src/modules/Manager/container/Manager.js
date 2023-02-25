@@ -7,11 +7,14 @@ import Timesheet from "../component/Timesheet";
 import data from "../../../assets/data/showtimesheettomanager.json";
 import projectOne from "../../../assets/data/showtimesheettomanagerprojectwise.json";
 import ReporteeList from "../component/ReporteeList";
+import {useNavigate} from "react-router-dom";
+import {useLocation} from "react-router-dom";
 
 const Manager = () => {
   const [display, setDisplay] = useState("timesheet");
   const [timsheetDisplay, setTimesheetDisplay] = useState(data);
-
+  const location=useLocation();
+  const [dataManager, setdataManager] = useState(location);
   const changeDisplay = (props) => {
     setDisplay(props);
   };
@@ -28,7 +31,7 @@ const Manager = () => {
 
   return (
     <div>
-      <Navbar />
+      <Navbar data={dataManager.state.EmployeeName} />
 
       <Grid
         container
