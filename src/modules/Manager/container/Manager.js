@@ -34,8 +34,10 @@ const dataOfManager={employeeId:dataManager.state.EmployeeId };
      });
      
     } else if (display == "project1") {
+      
       setTimesheetDisplay(projectOne);
-    } else if (display == "project2") {
+    } 
+    else if (display == "project2") {
       setTimesheetDisplay(projectOne);
     }
   }, [display]);

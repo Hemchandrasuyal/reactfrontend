@@ -5,7 +5,7 @@ import { Select, InputLabel } from "@mui/material";
 import axios from "axios";
 const Panel = ({ changeDisplay,data}) => {
   const [selected, setSelected] = useState("Reportees Timesheet");
-  const [projectData,setprojectData]=useState()
+  const [projectData,setProjectData]=useState([])
  
 
 
@@ -23,7 +23,7 @@ const Panel = ({ changeDisplay,data}) => {
   useEffect(() => {
     const url='http://localhost:8080/java/Manager/Project';
     axios.post(url,dataOfManager).then((result)=>{
-         setprojectData(result.data)
+         setProjectData(result.data)
           console.log(result.data);
    }).catch((error)=>{
         console.log(error)
@@ -47,14 +47,18 @@ const Panel = ({ changeDisplay,data}) => {
         >
           <InputLabel>Reportees Timesheet</InputLabel>
 
-          <MenuItem
-            value=""
-            style={{ color: "#043465", backgroundColor: "#ef4815" }}
-          >
-            Reportees Timesheet
-          </MenuItem>
-         
-          <MenuItem
+       
+          {projectData.map((item) => (
+           <MenuItem
+          
+           key={item.project_id}
+           onClick={handleClick}
+           style={{ color: "#043465", backgroundColor: "#ef4815" }}
+         >
+      {item.projectName}
+         </MenuItem>
+          ))}
+          {/* <MenuItem
             value="project1"
             style={{ color: "#043465", backgroundColor: "#ef4815" }}
             onClick={handleClick}
@@ -70,7 +74,7 @@ const Panel = ({ changeDisplay,data}) => {
             style={{ color: "#043465", backgroundColor: "#ef4815" }}
           >
             Project 2
-          </MenuItem>
+          </MenuItem> */}
         </Select>
       </p>
 
