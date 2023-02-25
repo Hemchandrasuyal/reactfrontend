@@ -50,7 +50,8 @@ const Panel = ({ changeDisplay,data}) => {
        
           {projectData.map((item) => (
            <MenuItem
-          
+           id={item.project_id}
+           value={item.project_id}
            key={item.project_id}
            onClick={handleClick}
            style={{ color: "#043465", backgroundColor: "#ef4815" }}

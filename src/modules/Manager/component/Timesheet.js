@@ -57,9 +57,10 @@ const Timesheet = ({ data, display }) => {
             <Grid item xs={2} sm={2} md={3}>
               <Item>
                 <h2>{item.timesheetId}</h2>
-                <p>Project Name: {item.project.projectName}</p>
-                <p>Project Id:{item.project.project_id}</p>
-                <p>Remarks:</p>
+                <p>Employee Name:{item.employee.employee_name}</p>
+                <p>Start date: {item.startDate}</p>
+                <p>End Date:{item.endDate}</p>
+                <p>Allocation:{item.hours}</p>
                 <p>Status:{item.approval}</p>
               </Item>
             </Grid>

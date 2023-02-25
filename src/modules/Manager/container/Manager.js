@@ -11,14 +11,16 @@ import {useNavigate} from "react-router-dom";
 import {useLocation} from "react-router-dom";
 import axios from 'axios';
 const Manager = () => {
-  const [display, setDisplay] = useState("timesheet");
+  const [display, setDisplay] = useState();
   const [timsheetDisplay, setTimesheetDisplay] = useState([]);
   const location=useLocation();
   const [dataManager, setdataManager] = useState(location);
   const changeDisplay = (props) => {
+    
     setDisplay(props);
   };
 const dataOfManager={employeeId:dataManager.state.EmployeeId };
+const dataOfManagerProject={employeeId:dataManager.state.EmployeeId,projectId:display };
   useEffect(() => {
     if (display == "timesheet") {
       const url='http://localhost:8080/java/Manager/Timesheet';
@@ -33,13 +35,23 @@ const dataOfManager={employeeId:dataManager.state.EmployeeId };
           console.log(error)
      });
      
-    } else if (display == "project1") {
+    } else {
+      const url='http://localhost:8080/java/Manager/Timesheet/Project';
+        
+      axios.post(url,dataOfManagerProject).then((result)=>{
+       
+          console.log(result.data);
+          setTimesheetDisplay(result.data);
+       
+              console.log(result.data);
+       }).catch((error)=>{
+            console.log(error)
+       });
       
-      setTimesheetDisplay(projectOne);
     } 
-    else if (display == "project2") {
-      setTimesheetDisplay(projectOne);
-    }
+    // else if (display == "project2") {
+    //   setTimesheetDisplay(projectOne);
+    // }
   }, [display]);
 
   return (
